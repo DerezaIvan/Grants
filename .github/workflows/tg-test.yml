@@ -1,6 +1,8 @@
 name: TG Test
 on:
-  workflow_dispatch:
+  push:
+    branches: [develop]
+    paths: [.github/workflows/tg-test.yml]
 jobs:
   send:
     runs-on: ubuntu-latest
