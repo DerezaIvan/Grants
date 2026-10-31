@@ -3,11 +3,14 @@
   import Button from '@/presentation/components/ui/Button/Button.svelte';
   import Field from '@/presentation/components/ui/Field/Field.svelte';
   import { participationOptions, stageOptions } from './constants';
+  import { formatMessage, sendTelegramMessage } from '@/shared/telegram';
 
   let step = $state(0);
   let stage = $state('');
   let participation = $state('');
   let sent = $state(false);
+  let sending = $state(false);
+  let failed = $state(false);
 
   const questions = [
     'На каком этапе вы сейчас?',
@@ -15,13 +18,31 @@
     'Как с вами связаться?',
   ];
 
-  function submit(event: SubmitEvent) {
+  async function submit(event: SubmitEvent) {
     event.preventDefault();
     if (step < 2) {
       step += 1;
       return;
     }
-    sent = true;
+    const data = new FormData(event.currentTarget as HTMLFormElement);
+    const text = formatMessage('Новая заявка из квиза', [
+      ['Этап', stage],
+      ['Участие в конкурсах', participation],
+      ['Имя', String(data.get('quiz-name') ?? '')],
+      ['Телефон', String(data.get('quiz-phone') ?? '')],
+      ['Способ связи', String(data.get('quiz-contact') ?? '')],
+    ]);
+
+    sending = true;
+    failed = false;
+    try {
+      await sendTelegramMessage(text);
+      sent = true;
+    } catch {
+      failed = true;
+    } finally {
+      sending = false;
+    }
   }
 </script>
 
@@ -83,10 +104,19 @@
       {/if}
       <Button
         type="submit"
-        disabled={sent || (step === 0 ? !stage : step === 1 ? !participation : false)}
+        disabled={sent || sending || (step === 0 ? !stage : step === 1 ? !participation : false)}
       >
-        {sent ? 'Спасибо! Мы свяжемся с вами' : step === 2 ? 'Отправить' : 'Далее'}
+        {sending
+          ? 'Отправляем…'
+          : sent
+            ? 'Спасибо! Мы свяжемся с вами'
+            : step === 2
+              ? 'Отправить'
+              : 'Далее'}
       </Button>
+      {#if failed}
+        <p class="quiz__error">Не получилось отправить заявку. Попробуйте ещё раз.</p>
+      {/if}
     </form>
   </div>
 </section>

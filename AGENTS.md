@@ -19,6 +19,7 @@ SvelteKit + TypeScript + SCSS. Лендинг «Искра» по вкладке
 - `src/presentation/components/sections` — самостоятельные блоки лендинга.
 - `src/presentation/layout` — Header и Footer.
 - `src/presentation/styles` — токены, миксины, шрифты и глобальные стили.
+- `src/shared` — общие сервисы без привязки к UI (например, отправка заявок в Telegram).
 - `tests` — Playwright-проверки.
 
 ## Обязательные требования

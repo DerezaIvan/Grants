@@ -60,6 +60,11 @@
   width: 100%;
   margin-top: 24px;
 }
+.quiz__error {
+  margin: 12px 0 0;
+  color: var(--color-purple);
+  font-size: 14px;
+}
 @media (max-width: 1100px) {
   .quiz__grid {
     grid-template-columns: 1fr;

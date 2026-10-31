@@ -66,6 +66,11 @@
   margin: 0;
   accent-color: var(--color-purple);
 }
+.contact__error {
+  margin: 0;
+  color: var(--color-purple);
+  font-size: 14px;
+}
 .contact__form > :global(.button) {
   width: 100%;
 }

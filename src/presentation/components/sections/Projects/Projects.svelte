@@ -5,7 +5,9 @@
   import { projects } from './constants';
 
   let offset = $state(0);
-  let orderedProjects = $derived([...projects.slice(offset), ...projects.slice(0, offset)]);
+  let orderedProjects = $derived(
+    [...projects.slice(offset), ...projects.slice(0, offset)].slice(0, 3)
+  );
 
   function rotate(direction: number) {
     offset = (offset + direction + projects.length) % projects.length;
@@ -22,7 +24,7 @@
     <div class="projects__carousel">
       <div class="projects__viewport" role="region" aria-label="Проекты">
         <div class="projects__track">
-          {#each orderedProjects as project (project.title)}
+          {#each orderedProjects as project (project)}
             <article class="project" animate:flip={{ duration: 320, easing: cubicOut }}>
               <h3 class="project__title">{project.title}</h3>
               <p class="project__text">{project.text}</p>

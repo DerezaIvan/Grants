@@ -66,11 +66,12 @@ test('project slider rotates cards with arrows', async ({ page }) => {
     '«Автоматический фотограф»',
   ]);
   await page.getByRole('button', { name: 'Следующий проект' }).click();
-  await expect(titles).toHaveText([
-    '«Фитобокс»',
-    '«Автоматический фотограф»',
-    'ИИ для подсчёта клеток',
-  ]);
+  await expect(titles).toHaveText(['«Фитобокс»', '«Автоматический фотограф»', 'GYMIK']);
+  await page.getByRole('button', { name: 'Следующий проект' }).click();
+  await page.getByRole('button', { name: 'Следующий проект' }).click();
+  await expect(titles).toHaveText(['GYMIK', 'GYMIK', 'Timely']);
+  await page.getByRole('button', { name: 'Предыдущий проект' }).click();
+  await page.getByRole('button', { name: 'Предыдущий проект' }).click();
   await page.getByRole('button', { name: 'Предыдущий проект' }).click();
   await expect(titles).toHaveText([
     'ИИ для подсчёта клеток',

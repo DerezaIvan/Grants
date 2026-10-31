@@ -40,13 +40,20 @@
   font-weight: 500;
 }
 
+.referral__card :global(.button) {
+  width: min(260px, 100%);
+}
+
 .referral__reward {
   display: block;
-  margin: 24px 0 0;
+  width: max-content;
+  margin: 24px 0 0 110px;
   color: var(--color-purple);
   font-size: 32px;
   font-weight: 500;
+  line-height: 1.2;
   transform: rotate(-6deg);
+  transform-origin: center;
 }
 
 @media (min-width: 901px) and (max-width: 1100px) {
