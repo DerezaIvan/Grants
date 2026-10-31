@@ -1,0 +1,26 @@
+.faq {
+  padding-top: 40px;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 70px;
+  }
+
+  &__aside {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  .faq {
+    padding-top: 0;
+
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+}

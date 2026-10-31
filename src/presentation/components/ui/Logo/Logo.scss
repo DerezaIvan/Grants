@@ -1,0 +1,19 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+
+  &__icon {
+    @media (max-width: 767px) {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  &--light {
+    color: white;
+  }
+}

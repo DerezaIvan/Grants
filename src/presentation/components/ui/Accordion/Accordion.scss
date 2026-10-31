@@ -1,0 +1,47 @@
+.accordion {
+  padding: 26px 20px;
+  border-top: 1px solid var(--color-border);
+
+  &:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+}
+
+.accordion__toggle {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: none;
+  text-align: left;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.25;
+  cursor: pointer;
+}
+
+.accordion__sign {
+  flex: 0 0 auto;
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.accordion__answer {
+  max-width: 650px;
+  padding-top: 18px;
+  white-space: pre-line;
+}
+
+@media (max-width: 767px) {
+  .accordion {
+    padding: 20px 0;
+  }
+
+  .accordion__toggle {
+    font-size: 17px;
+  }
+}

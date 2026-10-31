@@ -1,0 +1,45 @@
+.check-item {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 24px;
+  align-items: start;
+
+  &__icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: var(--color-soft);
+    font-size: 30px;
+  }
+
+  &__title {
+    font-size: 22px;
+    line-height: 1.25;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+  }
+
+  &__text {
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 767px) {
+  .check-item {
+    grid-template-columns: 36px 1fr;
+    gap: 12px;
+
+    &__icon {
+      width: 36px;
+      height: 36px;
+      font-size: 22px;
+    }
+
+    &__title {
+      font-size: 18px;
+    }
+  }
+}

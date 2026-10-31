@@ -1,0 +1,22 @@
+.field {
+  display: grid;
+  gap: 5px;
+  color: white;
+  font-size: 12px;
+
+  &__input {
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+    padding: 10px 12px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: var(--color-text);
+    background: white;
+    font-size: 16px;
+
+    &::placeholder {
+      color: #a0a0a0;
+    }
+  }
+}

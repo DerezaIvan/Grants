@@ -1,0 +1,52 @@
+.result {
+  padding-top: 0;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 90px;
+    margin-top: 48px;
+  }
+
+  &__card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  &__card-icon {
+    flex: 0 0 auto;
+  }
+
+  &__card-text {
+    max-width: 520px;
+    margin-left: 34px;
+
+    &:not(:first-child) {
+      margin-top: 14px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .result {
+    padding: 0 0 32px;
+
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 36px;
+    }
+
+    &__card-title {
+      font-size: 20px;
+    }
+
+    &__card-text {
+      margin-left: 0;
+    }
+  }
+}

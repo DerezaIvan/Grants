@@ -1,0 +1,93 @@
+.contact {
+  padding: 40px 0 0;
+  background: linear-gradient(to bottom, white 180px, var(--color-footer) 180px);
+}
+.contact__card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  padding: 69px 60px;
+  border-radius: 32px;
+  background-color: var(--color-dark);
+  background-image: linear-gradient(90deg, #ffffff08 1px, transparent 1px);
+  background-size: 112px 100%;
+  color: white;
+}
+.contact__title {
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+.contact__text {
+  margin-top: 20px;
+}
+.contact__form {
+  display: grid;
+  gap: 10px;
+}
+.contact__file {
+  display: grid;
+  gap: 5px;
+  font-size: 12px;
+}
+.contact__file-control {
+  display: flex;
+  height: 42px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: white;
+  color: #777;
+  font-size: 16px;
+}
+.contact__file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.contact__file-hint {
+  font-size: 12px;
+}
+.contact__agree {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 6px 0;
+  font-size: 13px;
+  cursor: pointer;
+}
+.contact__agree-input {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin: 0;
+  accent-color: var(--color-purple);
+}
+.contact__form > :global(.button) {
+  width: 100%;
+}
+@media (max-width: 900px) {
+  .contact__card {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 36px;
+  }
+}
+@media (max-width: 767px) {
+  .contact {
+    padding-top: 0;
+  }
+  .contact__card {
+    padding: 28px 20px;
+    border-radius: 24px;
+  }
+  .contact__title {
+    font-size: 34px;
+  }
+  .contact__title-br {
+    display: none;
+  }
+}

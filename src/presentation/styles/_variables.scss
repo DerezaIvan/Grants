@@ -1,0 +1,46 @@
+$bp-mobile: 480px;
+$bp-tablet: 768px;
+$bp-laptop: 1024px;
+$bp-desktop: 1440px;
+
+:root {
+  --font-main: 'Manrope', Arial, sans-serif;
+  --color-text: #1d1d1b;
+  --color-muted: #626262;
+  --color-surface: #ffffff;
+  --color-hero: #f3f3f5;
+  --color-soft: #f7f7f7;
+  --color-blue-soft: #f0f7fd;
+  --color-footer: #f0f0f2;
+  --color-dark: #171716;
+  --color-lime: #c8ff00;
+  --color-purple: #6727ef;
+  --color-lavender: #cdc4fb;
+  --color-link: #4a5ed0;
+  --color-border: #d8d8d5;
+  --container: 1240px;
+  --page-padding: 40px;
+  --radius-sm: 12px;
+  --radius-md: 24px;
+  --radius-lg: 36px;
+  --section-space: 120px;
+
+  @media (min-width: 901px) and (max-width: 1100px) {
+    --page-padding: 64px;
+  }
+
+  @media (max-width: 1023px) {
+    --section-space: 88px;
+  }
+
+  @media (max-width: 900px) {
+    --page-padding: 24px;
+  }
+
+  @media (max-width: 767px) {
+    --page-padding: 24px;
+    --section-space: 64px;
+    --radius-md: 20px;
+    --radius-lg: 28px;
+  }
+}
