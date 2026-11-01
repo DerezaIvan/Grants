@@ -6,8 +6,18 @@
     question,
     answer,
     open = false,
-  }: { question: string; answer: string; open?: boolean } = $props();
-  let expanded = $state(untrack(() => open));
+    onToggle,
+  }: { question: string; answer: string; open?: boolean; onToggle?: () => void } = $props();
+  let internalExpanded = $state(untrack(() => open));
+  let expanded = $derived(onToggle ? open : internalExpanded);
+
+  function toggle() {
+    if (onToggle) {
+      onToggle();
+    } else {
+      internalExpanded = !internalExpanded;
+    }
+  }
 </script>
 
 <style lang="scss">
@@ -15,12 +25,7 @@
 </style>
 
 <div class="accordion" class:accordion--open={expanded}>
-  <button
-    class="accordion__toggle"
-    type="button"
-    aria-expanded={expanded}
-    onclick={() => (expanded = !expanded)}
-  >
+  <button class="accordion__toggle" type="button" aria-expanded={expanded} onclick={toggle}>
     <span class="accordion__question">{question}</span><span
       class="accordion__sign"
       aria-hidden="true">{expanded ? '−' : '+'}</span

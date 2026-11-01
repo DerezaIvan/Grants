@@ -1,6 +1,8 @@
 <script lang="ts">
   import Accordion from '@/presentation/components/ui/Accordion/Accordion.svelte';
   import { faqItems } from './constants';
+
+  let activeIndex: number | null = $state(0);
 </script>
 
 <style lang="scss">
@@ -17,7 +19,8 @@
       {#each faqItems as item, index}<Accordion
           question={item.question}
           answer={item.answer}
-          open={index === 0}
+          open={activeIndex === index}
+          onToggle={() => (activeIndex = activeIndex === index ? null : index)}
         />{/each}
     </div>
   </div>

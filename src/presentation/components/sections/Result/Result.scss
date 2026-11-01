@@ -35,6 +35,12 @@
     background: var(--color-icon-soft);
     opacity: 1;
     transform: rotate(0deg);
+
+    :global(.check-icon) {
+      display: block;
+      width: 14px;
+      height: 14px;
+    }
   }
 
   &__card-text {
