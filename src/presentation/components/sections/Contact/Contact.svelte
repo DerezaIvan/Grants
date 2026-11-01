@@ -3,18 +3,28 @@
   import Button from '@/presentation/components/ui/Button/Button.svelte';
   import Field from '@/presentation/components/ui/Field/Field.svelte';
   import { formatMessage, sendTelegramDocument, sendTelegramMessage } from '@/shared/telegram';
+  import { clearFieldError, validateFields } from '@/shared/validation';
 
   let sent = $state(false);
   let sending = $state(false);
   let failed = $state(false);
   let agreed = $state(true);
   let files: FileList | undefined = $state();
+  let errors: Record<string, string> = $state({});
   const fileName = $derived(files?.[0]?.name ?? '');
 
   async function submit(event: SubmitEvent) {
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement;
     const data = new FormData(form);
+    errors = validateFields(data, {
+      name: { type: 'name', required: true },
+      phone: { type: 'phone', required: true },
+      message: { type: 'text' },
+      attachment: { type: 'file' },
+    });
+    if (Object.keys(errors).length > 0) return;
+
     const text = formatMessage('Новая заявка с сайта', [
       ['Имя', String(data.get('name') ?? '')],
       ['Телефон', String(data.get('phone') ?? '')],
@@ -55,13 +65,38 @@
           первого разговора не нужны.
         </p>
       </div>
-      <form class="contact__form" onsubmit={submit}>
-        <Field label="Имя" name="name" placeholder="Как к вам обращаться" required />
-        <Field label="Телефон" name="phone" type="tel" placeholder="+7 (___) ___-__-__" required />
+      <form
+        class="contact__form"
+        novalidate
+        onsubmit={submit}
+        oninput={event => clearFieldError(event, errors)}
+      >
+        <Field
+          label="Имя"
+          name="name"
+          placeholder="Введите ваше имя"
+          autocomplete="name"
+          maxlength={60}
+          error={errors.name}
+          required
+        />
+        <Field
+          label="Телефон"
+          name="phone"
+          type="tel"
+          placeholder="Введите номер телефона"
+          inputmode="tel"
+          autocomplete="tel"
+          maxlength={25}
+          error={errors.phone}
+          required
+        />
         <Field
           label="Опишите, с чем можем вам помочь"
           name="message"
-          placeholder="Напишите проблему"
+          placeholder="Кратко опишите вашу задачу"
+          maxlength={2000}
+          error={errors.message}
         />
         <label class="contact__file">
           <span class="contact__file-label">Заголовок</span>
@@ -75,8 +110,20 @@
               height="20"
             />
           </span>
-          <input class="contact__file-input" type="file" name="attachment" bind:files />
-          <small class="contact__file-hint">Максимум 25 mb</small>
+          <input
+            class="contact__file-input"
+            type="file"
+            name="attachment"
+            bind:files
+            aria-invalid={errors.attachment ? 'true' : undefined}
+            aria-describedby={errors.attachment ? 'attachment-error' : 'attachment-hint'}
+          />
+          <small class="contact__file-hint" id="attachment-hint">Максимум 25 МБ</small>
+          {#if errors.attachment}
+            <small class="contact__file-error" id="attachment-error" role="alert">
+              {errors.attachment}
+            </small>
+          {/if}
         </label>
         <label class="contact__agree"
           ><input

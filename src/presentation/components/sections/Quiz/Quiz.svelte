@@ -4,6 +4,7 @@
   import Field from '@/presentation/components/ui/Field/Field.svelte';
   import { participationOptions, stageOptions } from './constants';
   import { formatMessage, sendTelegramMessage } from '@/shared/telegram';
+  import { clearFieldError, validateFields } from '@/shared/validation';
 
   let step = $state(0);
   let stage = $state('');
@@ -11,6 +12,7 @@
   let sent = $state(false);
   let sending = $state(false);
   let failed = $state(false);
+  let errors: Record<string, string> = $state({});
 
   const questions = [
     'На каком этапе вы сейчас?',
@@ -25,6 +27,13 @@
       return;
     }
     const data = new FormData(event.currentTarget as HTMLFormElement);
+    errors = validateFields(data, {
+      'quiz-name': { type: 'name', required: true },
+      'quiz-phone': { type: 'phone', required: true },
+      'quiz-contact': { type: 'contact', required: true },
+    });
+    if (Object.keys(errors).length > 0) return;
+
     const text = formatMessage('Новая заявка из квиза', [
       ['Этап', stage],
       ['Участие в конкурсах', participation],
@@ -69,7 +78,13 @@
         height="400"
       />
     </div>
-    <form class="quiz__form" data-anim="fade-left" onsubmit={submit}>
+    <form
+      class="quiz__form"
+      data-anim="fade-left"
+      novalidate
+      onsubmit={submit}
+      oninput={event => clearFieldError(event, errors)}
+    >
       <h3 class="quiz__question">{questions[step]}</h3>
       {#if step === 0}
         {#each stageOptions as option (option.value)}
@@ -101,9 +116,34 @@
         {/each}
       {:else}
         <div class="quiz__fields">
-          <Field label="Имя" name="quiz-name" placeholder="Плейсхолдер" required />
-          <Field label="Телефон" name="quiz-phone" type="tel" placeholder="+7 ()  - -" required />
-          <Field label="Способ связи" name="quiz-contact" placeholder="Плейсхолдер" required />
+          <Field
+            label="Имя"
+            name="quiz-name"
+            placeholder="Введите ваше имя"
+            autocomplete="name"
+            maxlength={60}
+            error={errors['quiz-name']}
+            required
+          />
+          <Field
+            label="Телефон"
+            name="quiz-phone"
+            type="tel"
+            placeholder="Введите номер телефона"
+            inputmode="tel"
+            autocomplete="tel"
+            maxlength={25}
+            error={errors['quiz-phone']}
+            required
+          />
+          <Field
+            label="Способ связи"
+            name="quiz-contact"
+            placeholder="Telegram, WhatsApp или телефон"
+            maxlength={100}
+            error={errors['quiz-contact']}
+            required
+          />
         </div>
       {/if}
       <Button

@@ -18,5 +18,15 @@
     &::placeholder {
       color: #a0a0a0;
     }
+
+    &[aria-invalid='true'] {
+      border-color: var(--color-error);
+    }
+  }
+
+  &__error {
+    color: var(--color-error);
+    font-size: 12px;
+    line-height: 1.25;
   }
 }

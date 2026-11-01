@@ -71,6 +71,11 @@
 .contact__file-hint {
   font-size: 12px;
 }
+.contact__file-error {
+  color: var(--color-error);
+  font-size: 12px;
+  line-height: 1.25;
+}
 .contact__agree {
   display: flex;
   gap: 10px;

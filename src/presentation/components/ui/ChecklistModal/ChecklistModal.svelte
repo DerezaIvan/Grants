@@ -5,6 +5,7 @@
   import ConsentField from '@/presentation/components/ui/ConsentField/ConsentField.svelte';
   import Field from '@/presentation/components/ui/Field/Field.svelte';
   import { formatMessage, sendTelegramMessage } from '@/shared/telegram';
+  import { clearFieldError, validateFields } from '@/shared/validation';
 
   let { open = $bindable(false) } = $props();
 
@@ -12,6 +13,7 @@
   let sent = $state(false);
   let failed = $state(false);
   let agreed = $state(true);
+  let errors: Record<string, string> = $state({});
   let cardEl: HTMLDivElement | undefined = $state();
 
   function close() {
@@ -30,6 +32,13 @@
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement;
     const data = new FormData(form);
+    errors = validateFields(data, {
+      name: { type: 'name', required: true },
+      email: { type: 'email', required: true },
+      telegram: { type: 'telegram', required: true },
+    });
+    if (Object.keys(errors).length > 0) return;
+
     const text = formatMessage('Заявка на чек-лист', [
       ['Имя', String(data.get('name') ?? '')],
       ['Email', String(data.get('email') ?? '')],
@@ -54,6 +63,7 @@
     document.body.style.overflow = 'hidden';
     sent = false;
     failed = false;
+    errors = {};
     agreed = true;
     window.addEventListener('keydown', onKeydown);
     void tick().then(() => {
@@ -98,10 +108,41 @@
       {#if sent}
         <p class="checklist-modal__success">Чек-лист уже летит к вам. Проверьте Telegram.</p>
       {:else}
-        <form class="checklist-modal__form" onsubmit={submit}>
-          <Field label="Имя" name="name" placeholder="" required />
-          <Field label="Email" name="email" type="email" placeholder="" required />
-          <Field label="Телеграм" name="telegram" placeholder="@" required />
+        <form
+          class="checklist-modal__form"
+          novalidate
+          onsubmit={submit}
+          oninput={event => clearFieldError(event, errors)}
+        >
+          <Field
+            label="Имя"
+            name="name"
+            placeholder="Введите ваше имя"
+            autocomplete="name"
+            maxlength={60}
+            error={errors.name}
+            required
+          />
+          <Field
+            label="Email"
+            name="email"
+            type="email"
+            placeholder="Введите ваш email"
+            inputmode="email"
+            autocomplete="email"
+            maxlength={254}
+            error={errors.email}
+            required
+          />
+          <Field
+            label="Телеграм"
+            name="telegram"
+            placeholder="Введите @username"
+            autocomplete="off"
+            maxlength={33}
+            error={errors.telegram}
+            required
+          />
           <ConsentField bind:checked={agreed} />
           {#if failed}
             <p class="checklist-modal__error">

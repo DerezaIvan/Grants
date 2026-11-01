@@ -5,6 +5,7 @@
   import ConsentField from '@/presentation/components/ui/ConsentField/ConsentField.svelte';
   import Field from '@/presentation/components/ui/Field/Field.svelte';
   import { formatMessage, sendTelegramMessage } from '@/shared/telegram';
+  import { clearFieldError, validateFields } from '@/shared/validation';
 
   let { open = $bindable(false) } = $props();
 
@@ -12,6 +13,7 @@
   let sent = $state(false);
   let failed = $state(false);
   let agreed = $state(true);
+  let errors: Record<string, string> = $state({});
   let cardEl: HTMLDivElement | undefined = $state();
 
   function close() {
@@ -30,6 +32,14 @@
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement;
     const data = new FormData(form);
+    errors = validateFields(data, {
+      name: { type: 'name', required: true },
+      phone: { type: 'phone', required: true },
+      student: { type: 'contact', required: true },
+      comment: { type: 'text' },
+    });
+    if (Object.keys(errors).length > 0) return;
+
     const text = formatMessage('Рекомендация студента', [
       ['Имя', String(data.get('name') ?? '')],
       ['Телефон', String(data.get('phone') ?? '')],
@@ -55,6 +65,7 @@
     document.body.style.overflow = 'hidden';
     sent = false;
     failed = false;
+    errors = {};
     agreed = true;
     window.addEventListener('keydown', onKeydown);
     void tick().then(() => {
@@ -94,24 +105,53 @@
         </svg>
       </button>
       <h2 class="referral-modal__title" id="referral-modal-title">
-        {sent ? 'Заявка отправлена' : 'Знаете студента, которому может подойти «Студенческий стартап»?'}
+        {sent
+          ? 'Заявка отправлена'
+          : 'Знаете студента, которому может подойти «Студенческий стартап»?'}
       </h2>
       {#if sent}
         <p class="referral-modal__success">Спасибо! Мы свяжемся со студентом и вернёмся к вам.</p>
       {:else}
-        <form class="referral-modal__form" onsubmit={submit}>
-          <Field label="Имя" name="name" placeholder="Плейсхолдер" required />
-          <Field label="Телефон" name="phone" type="tel" placeholder="+7 ()  - -" required />
+        <form
+          class="referral-modal__form"
+          novalidate
+          onsubmit={submit}
+          oninput={event => clearFieldError(event, errors)}
+        >
+          <Field
+            label="Имя"
+            name="name"
+            placeholder="Введите ваше имя"
+            autocomplete="name"
+            maxlength={60}
+            error={errors.name}
+            required
+          />
+          <Field
+            label="Телефон"
+            name="phone"
+            type="tel"
+            placeholder="Введите номер телефона"
+            inputmode="tel"
+            autocomplete="tel"
+            maxlength={25}
+            error={errors.phone}
+            required
+          />
           <Field
             label="Контакт"
             name="student"
-            placeholder="Контакт того, кого хотите порекомендовать"
+            placeholder="Телефон или @username студента"
+            maxlength={100}
+            error={errors.student}
             required
           />
           <Field
             label="Проект/Идея"
             name="comment"
-            placeholder="Если знаете, кратко опишите проект или идею"
+            placeholder="Кратко опишите проект или идею"
+            maxlength={2000}
+            error={errors.comment}
           />
           <ConsentField bind:checked={agreed} />
           {#if failed}
