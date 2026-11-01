@@ -9,8 +9,16 @@
   padding: 69px 60px;
   border-radius: 32px;
   background-color: var(--color-dark);
-  background-image: linear-gradient(90deg, #ffffff08 1px, transparent 1px);
-  background-size: 112px 100%;
+  background-image:
+    radial-gradient(ellipse 52% 72% at 100% 0%, var(--color-contact-glow), transparent 72%),
+    radial-gradient(ellipse 52% 72% at 0% 100%, var(--color-contact-glow), transparent 72%),
+    linear-gradient(90deg, var(--color-contact-grid) 1px, transparent 1px),
+    linear-gradient(0deg, var(--color-contact-grid) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    96px 96px,
+    96px 96px;
   color: white;
 }
 .contact__title {
@@ -30,17 +38,29 @@
   display: grid;
   gap: 5px;
   font-size: 12px;
+  cursor: pointer;
 }
 .contact__file-control {
   display: flex;
-  height: 42px;
+  min-height: 42px;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   padding: 10px 12px;
+  border: 1px solid transparent;
   border-radius: 6px;
-  background: white;
-  color: #777;
+  background: var(--color-surface);
+  color: var(--color-muted);
   font-size: 16px;
+  overflow-wrap: anywhere;
+}
+.contact__file:focus-within .contact__file-control {
+  border-color: var(--color-control-muted);
+  outline: 2px solid var(--color-control-muted);
+  outline-offset: 2px;
+}
+.contact__file-icon {
+  flex: 0 0 auto;
 }
 .contact__file-input {
   position: absolute;
@@ -64,7 +84,10 @@
   height: 18px;
   flex: 0 0 auto;
   margin: 0;
-  accent-color: var(--color-purple);
+  accent-color: var(--color-consent);
+}
+.contact__agree-br {
+  display: none;
 }
 .contact__error {
   margin: 0;
@@ -78,7 +101,25 @@
   .contact__card {
     grid-template-columns: 1fr;
     gap: 40px;
+    max-width: 622px;
     padding: 36px;
+  }
+}
+@media (min-width: 768px) and (max-width: 900px) {
+  .contact {
+    padding-top: 80px;
+    background: linear-gradient(to bottom, white 260px, var(--color-footer) 260px);
+  }
+  .contact__card {
+    gap: 36px;
+    margin-inline: auto;
+    padding: 40px;
+  }
+  .contact__title {
+    font-size: 32px;
+  }
+  .contact__form {
+    gap: 8px;
   }
 }
 @media (max-width: 767px) {
@@ -94,5 +135,8 @@
   }
   .contact__title-br {
     display: none;
+  }
+  .contact__agree-br {
+    display: block;
   }
 }

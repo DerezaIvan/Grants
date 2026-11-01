@@ -50,10 +50,14 @@
   @use './Quiz.scss';
 </style>
 
-<section id="quiz" class="section">
-  <div class="container quiz__grid">
+<section id="quiz" class="section quiz">
+  <div class="container quiz__grid" data-anim-stagger data-anim-type="fade-right">
     <div class="quiz__intro">
-      <h2 class="quiz__title">Сомневаетесь, что стоит начинать? Бесплатно оценим ваш проект</h2>
+      <h2 class="quiz__title">
+        Сомневаетесь, <br class="quiz__title-break--mobile" />что стоит начинать?
+        <br class="quiz__title-break--mobile" />Бесплатно оценим
+        <br class="quiz__title-break--mobile" />ваш проект
+      </h2>
       <p class="quiz__text">
         Ответьте на 3 вопроса, и мы поможем усилить идею и подготовить её к подаче на грант
       </p>
@@ -65,7 +69,7 @@
         height="400"
       />
     </div>
-    <form class="quiz__form" onsubmit={submit}>
+    <form class="quiz__form" data-anim="fade-left" onsubmit={submit}>
       <h3 class="quiz__question">{questions[step]}</h3>
       {#if step === 0}
         {#each stageOptions as option (option.value)}

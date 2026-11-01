@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { asset } from '$app/paths';
   import Button from '@/presentation/components/ui/Button/Button.svelte';
   import Field from '@/presentation/components/ui/Field/Field.svelte';
   import { formatMessage, sendTelegramDocument, sendTelegramMessage } from '@/shared/telegram';
@@ -7,7 +8,8 @@
   let sending = $state(false);
   let failed = $state(false);
   let agreed = $state(true);
-  let fileName = $state('');
+  let files: FileList | undefined = $state();
+  const fileName = $derived(files?.[0]?.name ?? '');
 
   async function submit(event: SubmitEvent) {
     event.preventDefault();
@@ -43,7 +45,7 @@
 
 <section id="contact" class="contact">
   <div class="container">
-    <div class="contact__card">
+    <div class="contact__card" data-anim="fade-scale">
       <div class="contact__intro">
         <h2 class="contact__title">
           Остались вопросы?<br class="contact__title-br" />Напишите нам
@@ -61,16 +63,21 @@
           name="message"
           placeholder="Напишите проблему"
         />
-        <label class="contact__file"
-          ><span>Заголовок</span><span class="contact__file-control"
-            >{fileName || 'Загрузить с компьютера'}<b>☁</b></span
-          ><input
-            class="contact__file-input"
-            type="file"
-            name="attachment"
-            onchange={event => (fileName = event.currentTarget.files?.[0]?.name || '')}
-          /><small class="contact__file-hint">Максимум 25 mb</small></label
-        >
+        <label class="contact__file">
+          <span class="contact__file-label">Заголовок</span>
+          <span class="contact__file-control">
+            <span class="contact__file-name">{fileName || 'Загрузить с компьютера'}</span>
+            <img
+              class="contact__file-icon"
+              src={asset('/icons/upload-cloud.svg')}
+              alt=""
+              width="20"
+              height="20"
+            />
+          </span>
+          <input class="contact__file-input" type="file" name="attachment" bind:files />
+          <small class="contact__file-hint">Максимум 25 mb</small>
+        </label>
         <label class="contact__agree"
           ><input
             class="contact__agree-input"
@@ -78,8 +85,11 @@
             bind:checked={agreed}
             required
           /><span
-            >Я ознакомлен(а) с <u>Политикой конфиденциальности</u> и даю согласие на обработку моих персональных
-            данных</span
+            >Я ознакомлен(а) с <u
+              >Политикой<br class="contact__agree-br" />
+              конфиденциальности</u
+            >
+            и даю согласие на обработку моих<br class="contact__agree-br" /> персональных данных</span
           ></label
         >
         {#if failed}

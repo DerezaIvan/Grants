@@ -9,10 +9,12 @@
 
 <section class="section section--soft start">
   <div class="container">
-    <h2 class="section-title section-title--center">
-      Не всегда нужен готовый проект,<br class="start__title-break" />чтобы начать
+    <h2 class="section-title section-title--center" data-anim="fade-up">
+      Не всегда нужен готовый <br class="start__title-break--mobile" />проект,<br
+        class="start__title-break"
+      />чтобы начать
     </h2>
-    <div class="start__grid">
+    <div class="start__grid" data-anim-stagger data-anim-type="fade-scale">
       {#each startCards as card}
         <article class="start__card">
           <h3 class="start__card-title">{card.title}</h3>

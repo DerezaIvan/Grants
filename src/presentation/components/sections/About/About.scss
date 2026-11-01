@@ -22,7 +22,11 @@
 .about__copy-text:not(:first-child) {
   margin-top: 24px;
 }
+.about__title-break--mobile {
+  display: none;
+}
 .about__intro-mobile,
+.about__intro-tablet,
 .about__mobile-copy {
   display: none;
 }
@@ -57,6 +61,7 @@
 @media (max-width: 1100px) {
   .about__intro {
     grid-template-columns: 1.25fr 1fr;
+    align-items: start;
     margin-bottom: 120px;
   }
   .about__intro-title {
@@ -67,6 +72,7 @@
   }
   .about__grid {
     display: block;
+    padding-top: 40px;
   }
   .about__photo {
     display: none;
@@ -91,16 +97,73 @@
     }
   }
 }
+@media (min-width: 768px) and (max-width: 1023px) {
+  .about__intro {
+    display: block;
+    margin-bottom: 88px;
+  }
+  .about__intro-desktop {
+    display: none;
+  }
+  .about__intro-tablet {
+    display: block;
+    max-width: 660px;
+  }
+  .about__desktop-copy {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: none;
+    margin-top: 32px;
+    font-size: 16px;
+  }
+  .about__desktop-copy .about__copy-text:not(:first-child) {
+    margin-top: 0;
+  }
+}
+@media (min-width: 768px) and (max-width: 900px) {
+  .about {
+    padding: 88px 0 80px;
+  }
+  .about__intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 88px;
+  }
+  .about__intro-title {
+    font-size: 28px;
+    line-height: 1.25;
+  }
+  .about__desktop-copy {
+    display: block;
+    margin-top: 0;
+    line-height: 1.5;
+  }
+  .about__desktop-copy .about__copy-text:not(:first-child) {
+    margin-top: 24px;
+  }
+  .about__steps {
+    gap: 20px;
+  }
+  .about :global(.check-item__title) {
+    font-size: 20px;
+  }
+  .about :global(.check-item__text) {
+    line-height: 1.35;
+  }
+}
 @media (max-width: 767px) {
   .about {
-    padding: 64px 0 32px;
+    padding: 85px 0 82px;
   }
   .about__intro {
     display: block;
     margin-bottom: 0;
   }
   .about__intro-title {
-    font-size: 28px;
+    font-size: 27px;
+    line-height: 32px;
   }
   .about__intro-desktop,
   .about__desktop-copy {
@@ -111,13 +174,21 @@
     display: block;
   }
   .about__mobile-copy {
-    margin: 32px 0 80px;
+    margin: 20px 0 80px;
+  }
+  .about .about__title {
+    font-size: 26px;
+    line-height: 32px;
   }
   .about__title-break {
     display: none;
   }
+  .about__title-break--mobile {
+    display: block;
+  }
   .about__grid {
     display: block;
+    padding-top: 0;
   }
   .about__photo {
     display: none;
@@ -125,6 +196,22 @@
   .about__steps {
     grid-template-columns: 1fr;
     gap: 24px;
-    margin-top: 36px;
+    margin-top: 32px;
+  }
+  .about :global(.check-item) {
+    grid-template-columns: 52px 1fr;
+    gap: 24px;
+  }
+  .about :global(.check-item__icon) {
+    width: 52px;
+    height: 52px;
+    font-size: 30px;
+  }
+  .about :global(.check-item__title) {
+    font-size: 20px;
+  }
+  .about :global(.check-item__text) {
+    margin-top: 12px;
+    line-height: 1.3;
   }
 }

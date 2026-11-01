@@ -8,12 +8,12 @@
 </style>
 
 <section id="faq" class="section faq">
-  <div class="container faq__grid">
+  <div class="container faq__grid" data-anim-stagger data-anim-type="fade-right">
     <div class="faq__aside">
-      <span>FAQ</span>
-      <h2 class="section-title">Что важно знать,<br />подаваясь на грант</h2>
+      <span class="faq__label">FAQ</span>
+      <h2 class="section-title">Что важно знать,<br /> подаваясь на грант</h2>
     </div>
-    <div>
+    <div class="faq__list" data-anim="fade-left">
       {#each faqItems as item, index}<Accordion
           question={item.question}
           answer={item.answer}

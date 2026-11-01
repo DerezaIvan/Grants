@@ -16,3 +16,24 @@ node_modules/
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .tmp/
+
+# Локальные настройки агентов и AI-инструментов
+/AGENTS.md
+/CLAUDE.md
+/GEMINI.md
+/.github/agents/
+/.github/copilot-instructions.md
+/.github/instructions/
+/.github/prompts/
+/.agent/
+/.agents/
+/.ai/
+/.aider*
+/.claude/
+/.codeium/
+/.continue/
+/.cursor/
+/.gemini/
+/.roo/
+/.trae/
+/.windsurf/

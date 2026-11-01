@@ -1,5 +1,9 @@
 <script lang="ts">
   import Button from '@/presentation/components/ui/Button/Button.svelte';
+  import ReferralModal from '@/presentation/components/ui/ReferralModal/ReferralModal.svelte';
+  import { steps } from './constants';
+
+  let referralOpen = $state(false);
 </script>
 
 <style lang="scss">
@@ -8,35 +12,44 @@
 
 <section class="referral">
   <div class="container">
-    <div class="referral__card">
-      <div>
+    <div class="referral__card" data-anim="fade-scale">
+      <div class="referral__content">
         <h2 class="referral__title">
-          Знаете студента, которому может подойти «Студенческий стартап»?
+          <span class="referral__title-desktop"
+            >Знаете студента, которому<br />может подойти<br />«Студенческий стартап»?</span
+          >
+          <span class="referral__title-mobile"
+            >Знаете студента,<br />которому может<br />подойти «Студенческий<br />стартап»?</span
+          >
         </h2>
         <p class="referral__lead">
-          Порекомендуйте нас и получите вознаграждение,<br />если участник приходит по вашей
-          рекомендации<br />и начинает работать с нами.
+          <span class="referral__lead-desktop"
+            >Порекомендуйте нас и получите вознаграждение,<br />если участник приходит по вашей
+            рекомендации<br />и начинает работать с нами.</span
+          >
+          <span class="referral__lead-mobile"
+            >Порекомендуйте нас и получите<br />вознаграждение, если участник<br />приходит по вашей
+            рекомендации<br />и начинает работать с нами.</span
+          >
         </p>
-        <Button href="#contact" variant="lime">Рекомендовать студента</Button><strong
-          class="referral__reward">10 000 рублей</strong
-        >
+        <div class="referral__action">
+          <Button type="button" variant="lime" onclick={() => (referralOpen = true)}
+            >Рекомендовать студента</Button
+          >
+        </div>
+        <p class="referral__reward">10 000 рублей</p>
       </div>
       <div class="referral__steps">
         <h3 class="referral__steps-title">Как это работает</h3>
-        <p class="referral__step">
-          <b class="referral__step-title">01. Рекомендуете участника</b><br />Передаёте контакт или
-          отправляете ему свою реферальную ссылку.
-        </p>
-        <p class="referral__step">
-          <b class="referral__step-title">02. Мы разбираем проект</b><br />Проводим предварительную
-          оценку и понимаем, подходит ли проект для конкурса.
-        </p>
-        <p class="referral__step">
-          <b class="referral__step-title">03. Получаете вознаграждение</b><br />За каждого
-          приведённого друга, который станет победителем студенческого стартапа, вы получите 10 000
-          ₽
-        </p>
+        {#each steps as step}
+          <div class="referral__step">
+            <p class="referral__step-title">{step.title}</p>
+            <p class="referral__step-text">{step.text}</p>
+          </div>
+        {/each}
       </div>
     </div>
   </div>
 </section>
+
+<ReferralModal bind:open={referralOpen} />

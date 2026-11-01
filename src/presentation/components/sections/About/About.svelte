@@ -16,6 +16,9 @@
           >Погружаемся в ваш продукт<br />и помогаем получить грант<br />для проекта на любой стадии<br
           />развития.</span
         >
+        <span class="about__intro-tablet"
+          >Погружаемся в ваш продукт и помогаем получить грант для проекта на любой стадии развития.</span
+        >
         <span class="about__intro-mobile"
           >Погружаемся<br />в ваш продукт<br />и помогаем получить грант<br />для проекта на любой<br
           />стадии развития.</span
@@ -43,11 +46,12 @@
       </p>
     </div>
     <h2 class="section-title about__title">
-      Упакуем вашу идею или проект<br class="about__title-break" />для получения гранта или субсидии
+      Упакуем вашу идею <br class="about__title-break--mobile" />или проект
+      <br class="about__title-break" />для получения гранта или субсидии
     </h2>
     <div class="about__grid">
       <div>
-        <div class="about__steps">
+        <div class="about__steps" data-anim-stagger data-anim-type="fade-scale">
           {#each steps as step}<CheckItem title={step.title}>{step.text}</CheckItem>{/each}
         </div>
       </div>

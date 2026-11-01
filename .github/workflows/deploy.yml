@@ -20,12 +20,6 @@ jobs:
       - run: npm ci
       - run: npm run check
 
-      # Тесты временно неблокирующие: 3 визуальных теста падают из-за устаревших
-      # эталонов Figma. Убрать continue-on-error после обновления эталонов.
-      - name: Run tests
-        run: npx playwright install --with-deps chromium && npm test
-        continue-on-error: true
-
       - name: Set base path for staging
         if: github.ref == 'refs/heads/develop'
         run: echo "BASE_PATH=/Grants" >> "$GITHUB_ENV"

@@ -1,0 +1,120 @@
+.referral-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--page-padding);
+  overflow-y: auto;
+  background: rgb(0 0 0 / 60%);
+}
+
+.referral-modal__card {
+  position: relative;
+  width: min(100%, 615px);
+  margin: auto;
+  padding-bottom: 49px;
+  border: 1px solid var(--color-modal);
+  border-radius: 20px;
+  color: var(--color-modal-text);
+  background: var(--color-modal);
+  box-shadow: 0 24px 64px rgb(0 0 0 / 24%);
+}
+
+.referral-modal__close {
+  position: absolute;
+  top: 17px;
+  right: 24px;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  color: #666666;
+  background: transparent;
+  cursor: pointer;
+}
+
+.referral-modal__close:hover {
+  color: var(--color-modal-text);
+}
+
+.referral-modal__close-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.referral-modal__title {
+  margin: 74px 24px 0;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.02em;
+}
+
+.referral-modal__form {
+  display: grid;
+  gap: 17px;
+  margin: 20px 36px 0;
+}
+
+.referral-modal :global(.field) {
+  gap: 5px;
+  color: var(--color-modal-text);
+  line-height: 12px;
+}
+
+.referral-modal :global(.field__input) {
+  border-color: transparent;
+}
+
+.referral-modal__form > :global(.button) {
+  width: 100%;
+  margin-top: -5px;
+}
+
+.referral-modal__error {
+  margin: 0;
+  color: var(--color-modal-text);
+  font-size: 14px;
+}
+
+.referral-modal__success {
+  margin: 24px 36px 0;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+@media (max-width: 767px) {
+  .referral-modal {
+    padding: 12px;
+  }
+
+  .referral-modal__card {
+    padding-bottom: 28px;
+  }
+
+  .referral-modal__close {
+    right: 16px;
+  }
+
+  .referral-modal__title {
+    margin: 68px 20px 0;
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  .referral-modal__form {
+    gap: 16px;
+    margin: 16px 20px 0;
+  }
+
+  .referral-modal__form > :global(.button) {
+    margin-top: 0;
+  }
+
+  .referral-modal__success {
+    margin-inline: 20px;
+  }
+}

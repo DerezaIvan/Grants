@@ -134,6 +134,11 @@
 .header__mobile-menu > :global(.logo) {
   margin-top: 24px;
 }
+@media (min-width: 768px) {
+  .header__mobile-menu {
+    margin-inline: 24px;
+  }
+}
 @media (min-width: 901px) {
   .header__menu-overlay {
     display: none;

@@ -9,9 +9,10 @@
 <section id="community" class="section community">
   <div class="container">
     <h2 class="section-title section-title--center">
-      Не только сопровождение:<br />присоединяйтесь к сообществу
+      Не только сопровождение:<br class="community__title-divider" /> присоединяйтесь
+      <span class="community__title-break">к сообществу</span>
     </h2>
-    <div class="community__grid">
+    <div class="community__grid" data-anim-stagger data-anim-type="fade-scale">
       <article class="community__card">
         <div class="community__icon" aria-hidden="true">
           <img src={asset('/icons/telegram.svg')} alt="" width="49" height="41" />

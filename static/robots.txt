@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://derezaivan.github.io/Grants/sitemap.xml
+Sitemap: https://studstartup.ru/sitemap.xml

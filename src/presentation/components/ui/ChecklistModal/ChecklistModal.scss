@@ -1,0 +1,120 @@
+.checklist-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--page-padding);
+  overflow-y: auto;
+  background: rgb(0 0 0 / 60%);
+}
+
+.checklist-modal__card {
+  position: relative;
+  width: min(100%, 615px);
+  margin: auto;
+  padding-bottom: 51px;
+  border: 1px solid var(--color-modal);
+  border-radius: 20px;
+  color: var(--color-modal-text);
+  background: var(--color-modal);
+  box-shadow: 0 24px 64px rgb(0 0 0 / 24%);
+}
+
+.checklist-modal__close {
+  position: absolute;
+  top: 17px;
+  right: 24px;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  color: #666666;
+  background: transparent;
+  cursor: pointer;
+}
+
+.checklist-modal__close:hover {
+  color: var(--color-modal-text);
+}
+
+.checklist-modal__close-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.checklist-modal__title {
+  margin: 74px 24px 0;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.02em;
+}
+
+.checklist-modal__form {
+  display: grid;
+  gap: 17px;
+  margin: 16px 36px 0;
+}
+
+.checklist-modal :global(.field) {
+  gap: 5px;
+  color: var(--color-modal-text);
+  line-height: 12px;
+}
+
+.checklist-modal :global(.field__input) {
+  border-color: transparent;
+}
+
+.checklist-modal__form > :global(.button) {
+  width: 100%;
+  margin-top: -5px;
+}
+
+.checklist-modal__error {
+  margin: 0;
+  color: var(--color-modal-text);
+  font-size: 14px;
+}
+
+.checklist-modal__success {
+  margin: 24px 36px 0;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+@media (max-width: 767px) {
+  .checklist-modal {
+    padding: 12px;
+  }
+
+  .checklist-modal__card {
+    padding-bottom: 28px;
+  }
+
+  .checklist-modal__close {
+    right: 16px;
+  }
+
+  .checklist-modal__title {
+    margin: 68px 20px 0;
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  .checklist-modal__form {
+    gap: 16px;
+    margin: 16px 20px 0;
+  }
+
+  .checklist-modal__form > :global(.button) {
+    margin-top: 0;
+  }
+
+  .checklist-modal__success {
+    margin-inline: 20px;
+  }
+}
