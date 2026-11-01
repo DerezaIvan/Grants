@@ -20,8 +20,7 @@ jobs:
       - run: npm ci
       - run: npm run check
 
-      - name: Set base path for staging
-        if: github.ref == 'refs/heads/develop'
+      - name: Set base path for GitHub Pages
         run: echo "BASE_PATH=/Grants" >> "$GITHUB_ENV"
 
       - run: npm run build
@@ -32,34 +31,10 @@ jobs:
           path: build
           retention-days: 1
 
-  deploy-production:
-    name: Deploy to production server
+  deploy-pages:
+    name: Deploy to GitHub Pages
     needs: build
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: site
-          path: build
-
-      - name: Install SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -p "${{ secrets.SSH_PORT || 22 }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
-
-      - name: Rsync build to server
-        run: |
-          rsync -avz --delete \
-            -e "ssh -p ${{ secrets.SSH_PORT || 22 }}" \
-            build/ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_PATH }}"
-
-  deploy-staging:
-    name: Deploy to GitHub Pages (staging)
-    needs: build
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     permissions:
       pages: write
