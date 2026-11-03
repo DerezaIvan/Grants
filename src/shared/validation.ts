@@ -1,4 +1,5 @@
-export type FieldValidation = 'name' | 'phone' | 'email' | 'telegram' | 'contact' | 'text' | 'file';
+export type FieldValidation =
+  'name' | 'phone' | 'phoneOrTelegram' | 'email' | 'telegram' | 'contact' | 'text' | 'file';
 
 export interface FieldRule {
   type: FieldValidation;
@@ -6,9 +7,10 @@ export interface FieldRule {
 }
 
 const NAME_PATTERN = /^[\p{L}]+(?:[ '-][\p{L}]+)*$/u;
-const PHONE_PATTERN = /^\+?[0-9\s()-]+$/;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const TELEGRAM_PATTERN = /^@?[A-Za-z0-9_]{5,32}$/;
+const PHONE_FULL_PATTERN = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
+const PHONE_DIGITS_PATTERN = /^[78]\d{10}$/;
 const MAX_FILE_SIZE = 25 * 1024 * 1024;
 
 function validateText(type: FieldValidation, value: string): string {
@@ -22,11 +24,16 @@ function validateText(type: FieldValidation, value: string): string {
       return '';
     case 'phone': {
       const digits = trimmed.replace(/\D/g, '');
-      if (!PHONE_PATTERN.test(trimmed) || digits.length < 10 || digits.length > 15) {
-        return 'Введите корректный телефон, например +7 900 000-00-00';
+      if (!PHONE_FULL_PATTERN.test(trimmed) && !PHONE_DIGITS_PATTERN.test(digits)) {
+        return 'Введите телефон полностью: +7 (900) 000-00-00';
       }
       return '';
     }
+    case 'phoneOrTelegram':
+      if (!PHONE_FULL_PATTERN.test(trimmed) && !TELEGRAM_PATTERN.test(trimmed)) {
+        return 'Укажите телефон полностью или Telegram в формате @username';
+      }
+      return '';
     case 'email':
       if (trimmed.length > 254 || !EMAIL_PATTERN.test(trimmed)) {
         return 'Введите корректный email, например name@example.ru';

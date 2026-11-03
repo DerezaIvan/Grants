@@ -35,7 +35,7 @@
     errors = validateFields(data, {
       name: { type: 'name', required: true },
       phone: { type: 'phone', required: true },
-      student: { type: 'contact', required: true },
+      student: { type: 'phoneOrTelegram', required: true },
       comment: { type: 'text' },
     });
     if (Object.keys(errors).length > 0) return;
@@ -130,11 +130,8 @@
           <Field
             label="Телефон"
             name="phone"
-            type="tel"
-            placeholder="Введите номер телефона"
-            inputmode="tel"
+            phone
             autocomplete="tel"
-            maxlength={25}
             error={errors.phone}
             required
           />

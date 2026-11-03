@@ -42,7 +42,7 @@
       </div>
       <div class="footer__nav-group"><a href="#faq">FAQ</a><a href="#contact">Контакты</a></div>
     </nav>
-    <div class="footer__fund">
+    <!-- <div class="footer__fund">
       <img
         class="footer__fund-logo"
         src={asset('/icons/fund.svg')}
@@ -57,7 +57,7 @@
         «Студенческий стартап» федерального проекта «Платформа университетского технологического
         предпринимательства»
       </p>
-    </div>
+    </div> -->
     <div class="footer__bottom">
       <span class="footer__copyright">© 2026 Искра</span>
       <div class="footer__legal">

@@ -128,11 +128,8 @@
           <Field
             label="Телефон"
             name="quiz-phone"
-            type="tel"
-            placeholder="Введите номер телефона"
-            inputmode="tel"
+            phone
             autocomplete="tel"
-            maxlength={25}
             error={errors['quiz-phone']}
             required
           />
