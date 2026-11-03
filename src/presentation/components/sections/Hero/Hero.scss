@@ -122,10 +122,10 @@
     padding-inline: 12px;
   }
   .hero__cards {
-    width: calc(100% + 24px);
+    width: 150%;
     max-width: none;
     margin-top: 12px;
-    margin-right: -12px;
-    margin-left: -12px;
+    margin-right: -25%;
+    margin-left: -25%;
   }
 }
