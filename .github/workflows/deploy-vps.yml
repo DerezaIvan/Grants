@@ -1,0 +1,48 @@
+name: Deploy VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: vps-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and deploy to REG.RU
+    if: vars.VPS_HOST != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run check
+      - run: npm run check --prefix server
+      - run: BASE_PATH= npm run build
+
+      - name: Configure SSH
+        env:
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          mkdir -p "$HOME/.ssh"
+          printf '%s\n' "$VPS_SSH_KEY" > "$HOME/.ssh/id_ed25519"
+          chmod 600 "$HOME/.ssh/id_ed25519"
+          ssh-keyscan -p "${{ vars.VPS_PORT || '22' }}" "${{ vars.VPS_HOST }}" >> "$HOME/.ssh/known_hosts"
+
+      - name: Publish site and lead service
+        env:
+          VPS_HOST: ${{ vars.VPS_HOST }}
+          VPS_PORT: ${{ vars.VPS_PORT || '22' }}
+          VPS_USER: ${{ vars.VPS_USER || 'root' }}
+        run: |
+          SSH="ssh -p $VPS_PORT -i $HOME/.ssh/id_ed25519 -o StrictHostKeyChecking=yes"
+          rsync -az --delete -e "$SSH" build/ "$VPS_USER@$VPS_HOST:/var/www/studstartup/"
+          rsync -az -e "$SSH" server/index.js server/package.json "$VPS_USER@$VPS_HOST:/opt/grants-lead/"
+          $SSH "$VPS_USER@$VPS_HOST" "systemctl restart grants-lead && systemctl reload nginx"

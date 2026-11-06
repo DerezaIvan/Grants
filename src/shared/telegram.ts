@@ -1,7 +1,6 @@
-// Клиент отправки заявок. Токен бота НЕ хранится здесь:
-// заявки уходят на прокси (Cloudflare Worker), который подставляет токен
-// и chat_id сервер-сервером. URL прокси публичный, токен — нет.
-const LEAD_ENDPOINT = 'https://grants-lead.derezaivan.workers.dev';
+// Токен бота хранится только на сервере. Сайт отправляет заявки
+// на собственный backend, работающий на том же домене.
+const LEAD_ENDPOINT = '/api/lead';
 
 function escapeHtml(value: string): string {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

@@ -5,6 +5,10 @@ on:
     branches: [main, develop]
   workflow_dispatch:
 
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build:
     name: Build

@@ -1,0 +1,26 @@
+[Unit]
+Description=Grants Telegram lead service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=grants-lead
+Group=grants-lead
+WorkingDirectory=/opt/grants-lead
+Environment=NODE_ENV=production
+Environment=HOST=127.0.0.1
+Environment=PORT=3000
+EnvironmentFile=/etc/grants-lead/telegram.env
+ExecStart=/usr/bin/node /opt/grants-lead/index.js
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+RestrictSUIDSGID=true
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target
