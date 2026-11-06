@@ -8,10 +8,35 @@ export interface FieldRule {
 
 const NAME_PATTERN = /^[\p{L}]+(?:[ '-][\p{L}]+)*$/u;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const TELEGRAM_PATTERN = /^@?[A-Za-z0-9_]{5,32}$/;
+const TELEGRAM_PATTERN = /^@\S+$/;
 const PHONE_FULL_PATTERN = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
 const PHONE_DIGITS_PATTERN = /^[78]\d{10}$/;
 const MAX_FILE_SIZE = 25 * 1024 * 1024;
+const ALLOWED_FILE_EXTENSIONS = new Set([
+  'png',
+  'jpg',
+  'jpeg',
+  'webp',
+  'gif',
+  'heic',
+  'heif',
+  'pdf',
+  'doc',
+  'docx',
+  'odt',
+  'rtf',
+  'txt',
+  'csv',
+  'xls',
+  'xlsx',
+  'ods',
+  'ppt',
+  'pptx',
+  'odp',
+  'zip',
+  'rar',
+  '7z',
+]);
 
 function validateText(type: FieldValidation, value: string): string {
   const trimmed = value.trim();
@@ -69,8 +94,13 @@ export function validateFields(
     const value = data.get(name);
 
     if (rule.type === 'file') {
-      if (value instanceof File && value.size > MAX_FILE_SIZE) {
-        errors[name] = 'Размер файла не должен превышать 25 МБ';
+      if (value instanceof File && value.size > 0) {
+        const extension = value.name.split('.').pop()?.toLowerCase() ?? '';
+        if (!ALLOWED_FILE_EXTENSIONS.has(extension)) {
+          errors[name] = 'Выберите изображение, PDF, документ или архив';
+        } else if (value.size > MAX_FILE_SIZE) {
+          errors[name] = 'Размер файла не должен превышать 25 МБ';
+        }
       }
       continue;
     }

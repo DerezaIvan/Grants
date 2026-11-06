@@ -141,6 +141,15 @@ async function sendToTelegram({ text, document }) {
   });
 }
 
+async function sendLeadToTelegram(lead) {
+  if (lead.document && lead.text.length > 1024) {
+    const messageResponse = await sendToTelegram({ text: lead.text, document: null });
+    if (!messageResponse.ok) return messageResponse;
+    return sendToTelegram({ text: '', document: lead.document });
+  }
+  return sendToTelegram(lead);
+}
+
 async function handleLead(request, response) {
   if (isRateLimited(request)) {
     json(response, 429, { ok: false, error: 'too many requests' }, { 'Retry-After': '600' });
@@ -158,7 +167,7 @@ async function handleLead(request, response) {
   }
 
   try {
-    const telegramResponse = await sendToTelegram(lead);
+    const telegramResponse = await sendLeadToTelegram(lead);
     if (!telegramResponse.ok) {
       const details = await telegramResponse.json().catch(() => null);
       console.error(

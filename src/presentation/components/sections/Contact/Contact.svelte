@@ -111,11 +111,14 @@
             class="contact__file-input"
             type="file"
             name="attachment"
+            accept="image/*,.pdf,.doc,.docx,.odt,.rtf,.txt,.csv,.xls,.xlsx,.ods,.ppt,.pptx,.odp,.zip,.rar,.7z"
             bind:files
             aria-invalid={errors.attachment ? 'true' : undefined}
             aria-describedby={errors.attachment ? 'attachment-error' : 'attachment-hint'}
           />
-          <small class="contact__file-hint" id="attachment-hint">Максимум 25 МБ</small>
+          <small class="contact__file-hint" id="attachment-hint"
+            >Изображение, PDF, документ или архив — до 25 МБ</small
+          >
           {#if errors.attachment}
             <small class="contact__file-error" id="attachment-error" role="alert">
               {errors.attachment}
